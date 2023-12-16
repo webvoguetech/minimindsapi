@@ -6,9 +6,9 @@ import userRepository from '../repositories/userRepository.js';
 passport.use(
   new GoogleStrategy(
     {
-      clientID: '637619515875-850vfpag4m1ovkbd2ua182bms3ukomrg.apps.googleusercontent.com',
-      clientSecret: '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',
-      callbackURL: 'http://localhost:3000/api/user/auth/google/callback',
+      clientID: process.env.GOOGLE_CLIENTID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      callbackURL: process.env.GOOGLE_CALLBACKURL,
     },
     async (accessToken, refreshToken, profile, done) => {
       try {

@@ -1,5 +1,6 @@
 import express from 'express';
-// import { connectToMongoDB } from './config.js';
+import dotenv from "dotenv"
+dotenv.config()
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import categoryRoutes from './routes/categoryRoutes.js';
@@ -8,13 +9,14 @@ import resultRoutes from './routes/resultRoutes.js';
 import leaderboardRoutes from './routes/leaderboardRoutes.js';
 import userRoutes from "./routes/userRoutes.js"
 import session from 'express-session';
+
 const app = express();
 
 const PORT = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 
-mongoose.connect('mongodb://localhost/Quizapp');
+mongoose.connect(process.env.DB_URI);
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
