@@ -1,0 +1,21 @@
+// Quiz
+1. Create Quiz
+2. Update quiz
+3. Delete and Get By Category Id
+
+//Category
+1. Craete Category
+2. Update and Delete Category
+
+//Pending Tasks
+1. User Creating and Authentcation
+2.Google Login
+
+// Mobile APis
+
+Get all Categories
+
+get quiz by Category Id
+
+insert the  result and update leader board
+
