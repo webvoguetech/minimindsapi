@@ -1,21 +1,13 @@
-import { MongoClient } from "mongodb";
+import dotenv from "dotenv"
+dotenv.config()
+import admin  from "firebase-admin";
 
-const url = "mongodb://localhost:27017";
-let client;
+import serviceAccount from "./assets/minimindschallenge-firebase-adminsdk-qa103-c99ae1d172.json" assert { type: 'json' };
 
-export const connectToMongoDB = async () => {
-  try {
-    client = await MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
-    console.log("MongoDB is connected");
-  } catch (err) {
-    console.error("Error connecting to MongoDB:", err.message);
-    throw err; // Re-throw the error for better error handling upstream
-  }
-};
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  storageBucket: process.env.FIREBASE_PATH
+});
 
-export const getDB = () => {
-  if (!client) {
-    throw new Error("MongoDB not connected");
-  }
-  return client.db("ExpenZap");
-};
+
+export const bucket = admin.storage().bucket();

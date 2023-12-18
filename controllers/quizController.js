@@ -1,7 +1,5 @@
 // controllers/quizController.js
 import quizRepository from '../repositories/quizRepository.js';
-import path  from 'path';
-import fs from "fs/promises"
 const getQuizzesByCategory = async (req, res) => {
   try {
     const quizzes = await quizRepository.getQuizzesByCategory(req.params.categoryId);
@@ -16,11 +14,6 @@ const getQuizzesByCategory = async (req, res) => {
 
 const createQuiz = async (req, res) => {
   try {
-    
-    if (req.file) {
-      const normalizedPath = path.normalize(req.file.path);
-      req.body.imageUrl = normalizedPath;
-  } 
     const quizData = req.body;
     const quiz = await quizRepository.createQuiz(quizData);
     res.json(quiz);
@@ -37,15 +30,6 @@ const updateQuiz = async (req, res) => {
     if (existingquiz.length <= 0) {
       return res.status(404).json({ error: 'Quiz not found' });
     }
-    if (req.file) {
-      const normalizedPath = path.normalize(req.file.path);
-      req.body.imageUrl = normalizedPath;
-      const oldImagePath = existingquiz?.imageUrl;
-      if (oldImagePath) {
-        const oldImagePathOnDisk = path.resolve(oldImagePath);
-        await fs.unlink(oldImagePathOnDisk);
-      }
-  } 
     const quizData = req.body;
     const updatedQuiz = await quizRepository.updateQuiz(quizId, quizData);
     res.json(updatedQuiz);
