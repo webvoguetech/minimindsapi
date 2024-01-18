@@ -2,7 +2,7 @@ import express from 'express';
 import multer from 'multer';
 // import quizRepository from '../repositories/quizRepository.js';
 // import fileUploadMiddleware from '../middlewares/fileupload.middleware.js'; // Assuming you have a fileUpload middleware
-import { createQuiz, deleteQuiz, getQuizzesByCategory, updateQuiz } from '../controllers/quizController.js';
+import { createQuiz, deleteQuiz, getQuizzesByCategory, updateQuiz, getQuizzesCategoryLevels } from '../controllers/quizController.js';
 
 const storageConfig = multer.memoryStorage();
 
@@ -10,10 +10,15 @@ const upload = multer({ storage: storageConfig });
 import { bucket } from '../config.js';
 const router = express.Router();
 
+router.get('/getlevels/:category_id', async (req, res) => {
+  getQuizzesCategoryLevels(req, res);
+});
+
 // Get quizzes by category
-router.get('/:categoryId', async (req, res) => {
+router.get('/:categoryId/:level', async (req, res) => {
   getQuizzesByCategory(req, res);
 });
+
 
 // Create a new quiz
 router.post('/', upload.single('image_url'), async (req, res) => {

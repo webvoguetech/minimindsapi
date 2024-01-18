@@ -1,4 +1,5 @@
 // repositories/userRepository.js
+import mongoose from 'mongoose';
 import User from '../models/User.js';
 
 class UserRepository {
@@ -20,6 +21,10 @@ class UserRepository {
     } catch (error) {
       throw error;
     }
+  }
+
+  async findUser(userId){
+    return  await User.findById(userId);
   }
 }
 

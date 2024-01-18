@@ -2,11 +2,12 @@
 import quizRepository from '../repositories/quizRepository.js';
 const getQuizzesByCategory = async (req, res) => {
   try {
-    const quizzes = await quizRepository.getQuizzesByCategory(req.params.categoryId);
+    const { categoryId,level } = req.params;
+    const quizzes = await quizRepository.getQuizzesByCategory(categoryId,level);
     if(quizzes.length > 0){
       return res.status(200).json(quizzes);
     }
-    res.status(404).json({ error: 'Category not Found' });
+    res.status(404).json({ success : false,error: 'Questions not Found' });
   } catch (error) {
     res.status(500).json({ error: 'Internal Server Error' });
   }
@@ -48,4 +49,14 @@ const deleteQuiz = async (req, res) => {
   }
 };
 
-export { getQuizzesByCategory, createQuiz, updateQuiz, deleteQuiz };
+const getQuizzesCategoryLevels = async (req, res) => {
+  try {
+    const category_id = req.params.category_id;
+    const result = await quizRepository.getlevels(category_id);
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+}
+
+export { getQuizzesByCategory, createQuiz, updateQuiz, deleteQuiz,getQuizzesCategoryLevels };

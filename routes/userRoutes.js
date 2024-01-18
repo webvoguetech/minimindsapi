@@ -6,6 +6,7 @@ const router = express.Router();
 
 // Route for initiating Google login
 router.get('/auth/google', userController.googleLogin);
+router.get('/updatelevel/:userId/:categoryId/:newLevel', userController.updateUserLevel);
 
 // Callback route for handling Google login redirection
 router.get('/auth/google/callback', userController.googleLoginCallback, (req, res) => {
